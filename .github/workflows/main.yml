@@ -39,6 +39,9 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          VITE_OWM_KEY: ${{ secrets.VITE_OWM_KEY }}
+          VITE_OWM_URL: ${{ secrets.VITE_OWM_URL }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
