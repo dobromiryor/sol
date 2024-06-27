@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    @apply text-text bg-background;
+
+    --text: 7 8 9;
+    --inverted-text: 246 247 248;
+    --background: 214 224 245;
+    --primary: 112 120 143;
+    --secondary: 196 183 200;
+    --accent: 175 151 173;
+  }
+
+  .dark {
+    --text: 246 247 248;
+    --inverted-text: 7 8 9;
+    --background: 10 20 41;
+    --primary: 112 120 143;
+    --secondary: 68 55 72;
+    --accent: 104 80 102;
+  }
+}
+
+@starting-style {
+  .initial-opacity-0 {
+    @apply opacity-0;
+  }
+
+  .initial-backdrop-blur-0 {
+    @apply backdrop-blur-0;
+  }
+
+  .initial-scale-0 {
+    @apply scale-0;
+  }
+}
