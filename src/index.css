@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    @apply text-text bg-background;
+    @apply font-medium text-text bg-background;
 
     --text: 7 8 9;
     --inverted-text: 246 247 248;
