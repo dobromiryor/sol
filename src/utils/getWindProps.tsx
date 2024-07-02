@@ -1,71 +1,57 @@
 import { Unit } from "../enums/unit.enum";
 
 interface IntensityMap {
-  standard: { [key: number]: string };
-  metric: { [key: number]: string };
-  imperial: { [key: number]: string };
+  standard: Record<string, string>;
+  metric: Record<string, string>;
+  imperial: Record<string, string>;
 }
 
 export const getWindProps = (speed: number, unit = Unit.METRIC) => {
-  if (!speed) return;
-
-  const intensityMapStyles: IntensityMap = {
-    standard: {
-      0: "fill-cyan-50",
-      0.3: "fill-cyan-200",
-      1.6: "fill-teal-200",
-      3.4: "fill-green-300",
-      5.5: "fill-green-400",
-      8: "fill-lime-500",
-      10.8: "fill-lime-400",
-      13.9: "fill-yellow-400",
-      17.2: "fill-yellow-500",
-      20.8: "fill-amber-500",
-      24.5: "fill-orange-600",
-      28.5: "fill-red-600",
-      32.7: "fill-red-700",
-    },
-    metric: {
-      0: "fill-cyan-50",
-      0.3: "fill-cyan-200",
-      1.6: "fill-teal-200",
-      3.4: "fill-green-300",
-      5.5: "fill-green-400",
-      8: "fill-lime-500",
-      10.8: "fill-lime-400",
-      13.9: "fill-yellow-400",
-      17.2: "fill-yellow-500",
-      20.8: "fill-amber-500",
-      24.5: "fill-orange-600",
-      28.5: "fill-red-600",
-      32.7: "fill-red-700",
-    },
-    imperial: {
-      0: "fill-cyan-50",
-      1: "fill-cyan-200",
-      4: "fill-teal-200",
-      8: "fill-green-300",
-      13: "fill-green-400",
-      19: "fill-lime-500",
-      25: "fill-lime-400",
-      32: "fill-yellow-400",
-      39: "fill-yellow-500",
-      47: "fill-amber-500",
-      55: "fill-orange-600",
-      64: "fill-red-600",
-      73: "fill-red-700",
-    },
+  const metricStyles = {
+    "0.0": "fill-slate-50",
+    "0.3": "fill-slate-50",
+    "1.6": "fill-slate-100",
+    "3.4": "fill-slate-150",
+    "5.5": "fill-slate-200",
+    "8.0": "fill-slate-250",
+    "10.8": "fill-slate-300",
+    "13.9": "fill-slate-350",
+    "17.2": "fill-slate-400",
+    "20.8": "fill-slate-450",
+    "24.5": "fill-slate-500",
+    "28.5": "fill-slate-550",
+    "32.7": "fill-slate-600",
   };
 
-  for (const threshold in intensityMapStyles[unit]) {
+  const imperialStyles = {
+    "0": "fill-slate-50",
+    "1": "fill-slate-50",
+    "4": "fill-slate-100",
+    "8": "fill-slate-150",
+    "13": "fill-slate-200",
+    "19": "fill-slate-250",
+    "25": "fill-slate-300",
+    "32": "fill-slate-350",
+    "39": "fill-slate-400",
+    "47": "fill-slate-450",
+    "55": "fill-slate-500",
+    "64": "fill-slate-550",
+    "73": "fill-slate-600",
+  };
+
+  const intensityMap: IntensityMap = {
+    standard: metricStyles,
+    metric: metricStyles,
+    imperial: imperialStyles,
+  };
+
+  for (const threshold in intensityMap[unit]) {
     if (speed <= parseFloat(threshold)) {
-      return intensityMapStyles[unit][threshold];
+      return intensityMap[unit][threshold];
     }
   }
 
-  const intensityMapKeys = Object.keys(
-    intensityMapStyles[unit]
-  ) as unknown as number[];
+  const intensityMapKeys = Object.keys(intensityMap[unit]);
 
-  return intensityMapStyles[unit][intensityMapKeys.slice(-1)[0]];
+  return intensityMap[unit][intensityMapKeys.slice(-1)[0]];
 };
