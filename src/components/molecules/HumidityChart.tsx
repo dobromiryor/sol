@@ -3,23 +3,24 @@ import { useWeatherStore } from "../../stores/weather.store";
 import { Hourly } from "../../types/weather.type";
 import { getAdjustedTime } from "../../utils/getAdjustedTime";
 import { getClosestItem } from "../../utils/getClosestItem";
+import { getHumidityColor } from "../../utils/getHumidityProps";
 
 export const HumidityChart = () => {
   const { data } = useWeatherStore();
 
   const getHumidityProps = (item: Hourly) => {
     const styles = {
-      "0": "bg-amber-200 rounded-[2px] h-0.5",
-      "10": "bg-amber-200 rounded-[4px] h-1",
-      "20": "bg-amber-300 rounded-[5px] h-2",
-      "30": "bg-amber-300 rounded-[6px] h-3",
-      "40": "bg-amber-400 rounded-[7px] h-4",
-      "50": "bg-amber-500 rounded-[8px] h-5",
-      "60": "bg-amber-500 rounded-[9px] h-6",
-      "70": "bg-amber-600 rounded-[10px] h-7",
-      "80": "bg-amber-600 rounded-[12px] h-8",
-      "90": "bg-amber-700 rounded-[14px] h-9",
-      "100": "bg-amber-700 rounded-[16px] h-10",
+      "0": "rounded-[2px] h-0.5",
+      "10": "rounded-[4px] h-1",
+      "20": "rounded-[5px] h-2",
+      "30": "rounded-[6px] h-3",
+      "40": "rounded-[7px] h-4",
+      "50": "rounded-[8px] h-5",
+      "60": "rounded-[9px] h-6",
+      "70": "rounded-[10px] h-7",
+      "80": "rounded-[12px] h-8",
+      "90": "rounded-[14px] h-9",
+      "100": "rounded-[16px] h-10",
     };
 
     const closestItem = getClosestItem(
@@ -44,6 +45,7 @@ export const HumidityChart = () => {
           <div
             className={clsx(
               "p-0.5 w-8 transition-all duration-1000",
+              getHumidityColor(item.humidity),
               getHumidityProps(item)
             )}
           />
