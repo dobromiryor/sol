@@ -29,6 +29,8 @@ export const DailyForecast = () => {
                       getAdjustedTime(data.timezone_offset, item.dt)
                     ).toLocaleDateString("en-gb", {
                       weekday: "long",
+                      day: "numeric",
+                      month: "short",
                     })}
               </span>
               <div className="flex items-center gap-2">
