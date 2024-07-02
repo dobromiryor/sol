@@ -77,6 +77,7 @@ export const Navbar = () => {
     getItemProps,
     highlightedIndex,
   } = useCombobox({
+    inputValue: search,
     items: geocodingData ?? [],
     onInputValueChange: ({ inputValue }) => setSearch(inputValue),
     itemToString,
@@ -110,7 +111,9 @@ export const Navbar = () => {
         <input
           className="px-1.5 bg-transparent text-lg w-full rounded-full"
           placeholder={itemToString(selectedItem)}
-          {...getInputProps()}
+          {...getInputProps({
+            onFocus: () => (isLocal ? setSearch("") : null),
+          })}
         />
         <button
           onClick={() => setIsModalOpen(true)}
