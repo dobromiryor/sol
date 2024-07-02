@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useCombobox } from "downshift";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { GeolocationStatus } from "../../enums/geolocation-status.enum";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useGeocoding } from "../../hooks/useGeocoding";
@@ -29,6 +29,8 @@ export const Navbar = () => {
   const [search, setSearch] = useState("");
   const [selectedItem, setSelectedItem] = useState<Geocoding | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { isLocal, setIsLocal } = useWeatherStore();
   const { geocode, setGeocode } = useGeocodeStore();
@@ -82,6 +84,7 @@ export const Navbar = () => {
     onInputValueChange: ({ inputValue }) => setSearch(inputValue),
     itemToString,
     onSelectedItemChange: ({ selectedItem }) => {
+      inputRef.current?.blur();
       setSelectedItem(selectedItem);
       setGeocode(selectedItem);
       setIsLocal(false);
@@ -112,6 +115,7 @@ export const Navbar = () => {
           className="px-1.5 bg-transparent text-lg w-full rounded-full"
           placeholder={itemToString(selectedItem)}
           {...getInputProps({
+            ref: inputRef,
             onFocus: () => (isLocal ? setSearch("") : null),
           })}
         />
