@@ -36,10 +36,21 @@ export const useGeolocation = () => {
       setStatus(GeolocationStatus.TIMEOUT);
     }
 
-    if (isGeolocationAvailable && isGeolocationEnabled && !positionError) {
+    if (
+      coords &&
+      isGeolocationAvailable &&
+      isGeolocationEnabled &&
+      positionError === undefined
+    ) {
       setStatus(GeolocationStatus.SUCCESS);
     }
-  }, [isGeolocationAvailable, isGeolocationEnabled, positionError, setStatus]);
+  }, [
+    coords,
+    isGeolocationAvailable,
+    isGeolocationEnabled,
+    positionError,
+    setStatus,
+  ]);
 
   useEffect(() => {
     if (status === GeolocationStatus.SUCCESS) {

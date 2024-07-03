@@ -45,7 +45,9 @@ export const useReverseGeocoding = ({
   );
 
   useEffect(() => {
-    setGeocode(res.data?.[0]);
+    if (res.data?.[0]) {
+      setGeocode(res.data?.[0]);
+    }
   }, [coords, res.data, setGeocode]);
 
   return res;

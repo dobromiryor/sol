@@ -24,7 +24,7 @@ const getWeatherFromStorage = () => {
       return weather.state;
     }
   } catch (error) {
-    console.error("Error retrieving theme data from localStorage", error);
+    console.error("Error retrieving weather data from localStorage", error);
   }
 
   return undefined;
@@ -37,7 +37,7 @@ export const useWeatherStore = create<WeatherState>()(
       setUnit: (unit) => set({ unit }),
       data: getWeatherFromStorage()?.data ?? fallback,
       setData: (data) => set(() => ({ data })),
-      isLocal: getWeatherFromStorage()?.isLocal ?? true,
+      isLocal: getWeatherFromStorage()?.isLocal ?? false,
       setIsLocal: (isLocal) => set({ isLocal }),
     }),
     {
