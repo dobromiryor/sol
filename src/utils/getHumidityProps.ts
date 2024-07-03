@@ -32,7 +32,7 @@ export const getHumidityColor = (humidity: number) => {
 
 export const getHumidityProps = (humidity: number) => {
   const humidityScaleMapStyles: { [key: string]: string } = {
-    "0": "scale-y-0",
+    "0": "scale-y-[0]",
     "5": "scale-y-[0.05]",
     "10": "scale-y-[0.1]",
     "15": "scale-y-[0.15]",
@@ -42,17 +42,17 @@ export const getHumidityProps = (humidity: number) => {
     "35": "scale-y-[0.35]",
     "40": "scale-y-[0.4]",
     "45": "scale-y-[0.45]",
-    "50": "scale-y-50",
-    "55": "scale-y-55",
+    "50": "scale-y-[0.5]",
+    "55": "scale-y-[0.55]",
     "60": "scale-y-[0.6]",
     "65": "scale-y-[0.65]",
     "70": "scale-y-[0.7]",
     "75": "scale-y-[0.75]",
     "80": "scale-y-[0.8]",
     "85": "scale-y-[0.85]",
-    "90": "scale-y-90",
-    "95": "scale-y-95",
-    "100": "scale-y-100",
+    "90": "scale-y-[0.90]",
+    "95": "scale-y-[0.95]",
+    "100": "scale-y-[1]",
   };
 
   return {
