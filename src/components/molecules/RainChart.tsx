@@ -63,7 +63,7 @@ export const RainChart = () => {
             )}
           />
           <span aria-label="Probability of precipitation" className="text-xs">
-            {(item.pop * 100).toFixed()}%
+            {Math.round(item.pop * 10) * 10}%
           </span>
           <span className="text-xs text-inverted-text/75 dark:text-text/75">
             {new Date(

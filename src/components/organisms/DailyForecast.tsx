@@ -34,12 +34,12 @@ export const DailyForecast = () => {
                     })}
               </span>
               <div className="flex items-center gap-2">
-                {item.pop > 0 && (
+                {Math.round(item.pop * 10) * 10 > 0 && (
                   <span
                     aria-label="Probability of precipitation"
                     className="text-sm text-blue-300"
                   >
-                    {(item.pop * 100).toFixed()}%
+                    {Math.round(item.pop * 10) * 10}%
                   </span>
                 )}
                 <WeatherIcon

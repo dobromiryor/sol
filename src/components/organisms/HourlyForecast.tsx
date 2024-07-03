@@ -20,12 +20,12 @@ export const HourlyForecast = () => {
             key={`Hourly__Forecast__${item.dt}__${index}`}
           >
             <span aria-label="Temperature">{item.temp.toFixed()}°</span>
-            {item.pop > 0 ? (
+            {Math.round(item.pop * 10) * 10 > 0 ? (
               <span
                 aria-label="Probability of precipitation"
                 className="text-sm text-blue-300"
               >
-                {(item.pop * 100).toFixed()}%
+                {Math.round(item.pop * 10) * 10}%
               </span>
             ) : (
               <div className="w-1 h-5" />
