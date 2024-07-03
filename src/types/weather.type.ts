@@ -7,7 +7,7 @@ export interface WeatherDTO {
   minutely: Minutely[];
   hourly: Hourly[];
   daily: Daily[];
-  alerts: Alert[];
+  alerts?: Alert[];
   isFallback?: boolean;
 }
 
@@ -102,13 +102,34 @@ export interface FeelsLike {
   morn: number;
 }
 
+export enum AlertTag {
+  EXTREME_LOW_TEMPERATURE = "Extreme low temperature",
+  EXTREME_HIGH_TEMPERATURE = "Extreme high temperature",
+  MARINE_EVENT = "Marine event",
+  COASTAL_EVENT = "Coastal event",
+  FLOOD = "Flood",
+  RAIN = "Rain",
+  HAIL = "Hail",
+  THUNDERSTORM = "Thunderstorm",
+  WIND = "Wind",
+  TORNADO = "Tornado",
+  CYCLONE = "Cyclone",
+  SNOW_ICE = "Snow ice",
+  AVALANCHES = "Avalanches",
+  AIR_QUALITY = "Air quality",
+  SAND_DUST = "Sand dust",
+  FOG = "Fog",
+  FIRE_WARNING = "Fire warning",
+  OTHER_DANGERS = "Other dangers",
+}
+
 export interface Alert {
   sender_name: string;
   event: string;
   start: number;
   end: number;
   description: string;
-  tags: unknown[];
+  tags: (AlertTag | string)[];
 }
 
 interface RainOrSnow {
