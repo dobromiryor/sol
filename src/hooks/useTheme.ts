@@ -3,13 +3,37 @@ import { Theme } from "../enums/theme.enum";
 import { useThemeStore } from "../stores/theme.store";
 
 const updateMetaThemeColor = (theme: Theme) => {
-  const meta = document.querySelector("meta[name=color-scheme]");
+  const metaColorSheme = document.querySelector("meta[name=color-scheme]");
 
-  if (meta && "content" in meta) {
+  if (metaColorSheme && "content" in metaColorSheme) {
     if (theme === Theme.DARK) {
-      meta.content = "dark light";
+      metaColorSheme.content = "dark light";
     } else {
-      meta.content = "light dark";
+      metaColorSheme.content = "light dark";
+    }
+  }
+
+  const metaThemeColor = document.querySelector(
+    "meta[name=theme-color]:not([media])"
+  );
+
+  const themeMap = {
+    dark: "#0a1429",
+    light: "#d6e0f5",
+  };
+
+  if (!metaThemeColor && theme !== Theme.AUTO) {
+    const meta = document.createElement("meta");
+    meta.name = "theme-color";
+    meta.content = themeMap[theme];
+    document.head.appendChild(meta);
+  }
+
+  if (metaThemeColor && "content" in metaThemeColor) {
+    if (theme === Theme.AUTO) {
+      document.head.removeChild(metaThemeColor);
+    } else {
+      metaThemeColor.content = themeMap[theme];
     }
   }
 };
