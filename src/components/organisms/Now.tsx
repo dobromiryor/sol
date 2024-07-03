@@ -37,7 +37,11 @@ export const Now = () => {
           <span className="text-6xl font-bold">
             {data.current.temp.toFixed()}°
           </span>
-          <WeatherIcon icon={data.current.weather[0].icon} scale={2} />
+          <WeatherIcon
+            icon={data.current.weather[0].icon}
+            scale={2}
+            alt={data.current.weather[0].description}
+          />
         </div>
         <div className="flex gap-1 text-sm text-text/75">
           <span>High: {data.daily[0].temp.max.toFixed()}°</span>

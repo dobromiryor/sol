@@ -82,8 +82,8 @@ export const Modal = ({
       >
         <div className="flex justify-between items-center">
           <h1 className="font-bold text-xl">{title}</h1>
-          <button aria-label="Close" onClick={handleDismiss}>
-            <Icon icon="close" size="24" />
+          <button aria-label="Close modal" onClick={handleDismiss}>
+            <Icon icon="close" size="24" aria-hidden />
           </button>
         </div>
         {children}

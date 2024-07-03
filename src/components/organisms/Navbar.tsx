@@ -108,8 +108,9 @@ export const Navbar = () => {
           disabled={isLocal || status !== GeolocationStatus.SUCCESS}
           onClick={() => setIsLocal(true)}
           className="flex justify-center items-center w-7 aspect-square"
+          aria-label={`Location status: ${status.replace("-", " ")}`}
         >
-          <Icon icon={getLocationIcon(status)} size="20" />
+          <Icon icon={getLocationIcon(status)} size="20" aria-hidden />
         </button>
         <input
           className="px-1.5 bg-transparent text-lg w-full rounded-full"
@@ -122,8 +123,9 @@ export const Navbar = () => {
         <button
           onClick={() => setIsModalOpen(true)}
           className="flex justify-center items-center w-7 aspect-square"
+          aria-label="Open settings modal"
         >
-          <Icon icon="settings" size="20" />
+          <Icon icon="settings" size="20" aria-hidden />
         </button>
       </div>
       <ul
@@ -158,7 +160,7 @@ export const Navbar = () => {
             </li>
           ))
         ) : (
-          <span className="self-center">
+          <span aria-hidden={!isOpen} className="self-center">
             No results. Try entering a city name.
           </span>
         )}

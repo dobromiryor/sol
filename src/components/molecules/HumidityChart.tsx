@@ -38,7 +38,10 @@ export const HumidityChart = () => {
           className="flex flex-col justify-end items-center gap-1 h-28"
           key={`Hourly__Rain__${item.dt}`}
         >
-          <span className="text-xs text-inverted-text/75 dark:text-text/75">
+          <span
+            aria-label="Humidity"
+            className="text-xs text-inverted-text/75 dark:text-text/75"
+          >
             {item.humidity}%
           </span>
 

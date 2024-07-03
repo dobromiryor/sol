@@ -35,15 +35,21 @@ export const DailyForecast = () => {
               </span>
               <div className="flex items-center gap-2">
                 {item.pop > 0 && (
-                  <span className="text-sm text-blue-300">
+                  <span
+                    aria-label="Probability of precipitation"
+                    className="text-sm text-blue-300"
+                  >
                     {(item.pop * 100).toFixed()}%
                   </span>
                 )}
-                <WeatherIcon icon={item.weather[0].icon} />
+                <WeatherIcon
+                  icon={item.weather[0].icon}
+                  alt={item.weather[0].description}
+                />
                 <div>
-                  <span>{item.temp.max.toFixed()}°</span>
-                  <span>/</span>
-                  <span>{item.temp.min.toFixed()}°</span>
+                  <span aria-label="Highest">{item.temp.max.toFixed()}°</span>
+                  <span aria-hidden>/</span>
+                  <span aria-label="Lowest">{item.temp.min.toFixed()}°</span>
                 </div>
               </div>
             </div>

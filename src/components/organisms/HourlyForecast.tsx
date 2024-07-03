@@ -19,12 +19,22 @@ export const HourlyForecast = () => {
             )}
             key={`Hourly__Forecast__${item.dt}__${index}`}
           >
-            <span>{item.temp.toFixed()}°</span>
-            <span className="text-sm text-blue-300">
-              {item.pop > 0 ? `${(item.pop * 100).toFixed()}%` : ""}
-            </span>
+            <span aria-label="Temperature">{item.temp.toFixed()}°</span>
+            {item.pop > 0 ? (
+              <span
+                aria-label="Probability of precipitation"
+                className="text-sm text-blue-300"
+              >
+                {(item.pop * 100).toFixed()}%
+              </span>
+            ) : (
+              <div className="w-1 h-5" />
+            )}
             <div className="flex flex-col justify-center items-center">
-              <WeatherIcon icon={item.weather[0].icon} />
+              <WeatherIcon
+                icon={item.weather[0].icon}
+                alt={item.weather[0].description}
+              />
               <span className="text-sm text-inverted-text/75 dark:text-text/75">
                 {index === 0
                   ? "Now"

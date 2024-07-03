@@ -60,6 +60,7 @@ export const Alert = ({ item, className }: AlertProps) => {
               key={`Alert__Icon__Tag__${tag}`}
               icon={getAlertIcon(tag)}
               size="24"
+              aria-hidden
             />
           ))}
         </div>

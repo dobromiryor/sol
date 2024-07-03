@@ -45,7 +45,10 @@ export const RainChart = () => {
           key={`Hourly__Rain__${item.dt}`}
         >
           {item.rain?.["1h"] ? (
-            <span className="text-xs text-inverted-text/75 dark:text-text/75">
+            <span
+              aria-label="Precipitation, mm/h"
+              className="text-xs text-inverted-text/75 dark:text-text/75"
+            >
               {item.rain?.["1h"] >= 0.25
                 ? item.rain?.["1h"].toFixed(1)
                 : "<0.25"}
@@ -59,7 +62,9 @@ export const RainChart = () => {
               getRainProps(item)
             )}
           />
-          <span className="text-xs">{(item.pop * 100).toFixed()}%</span>
+          <span aria-label="Probability of precipitation" className="text-xs">
+            {(item.pop * 100).toFixed()}%
+          </span>
           <span className="text-xs text-inverted-text/75 dark:text-text/75">
             {new Date(
               getAdjustedTime(data.timezone_offset, item.dt)
