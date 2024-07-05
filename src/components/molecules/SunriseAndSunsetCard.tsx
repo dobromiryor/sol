@@ -11,7 +11,10 @@ export const SunriseAndSunsetCard = () => {
   }
 
   return (
-    <div className="col-span-2 flex flex-col gap-1 p-4 bg-primary text-inverted-text dark:text-text rounded-xl text-sm">
+    <li
+      className="col-span-2 flex flex-col gap-1 p-4 bg-primary text-inverted-text dark:text-text rounded-xl text-sm"
+      tabIndex={0}
+    >
       <span>Sunrise & sunset</span>
 
       <div
@@ -64,6 +67,6 @@ export const SunriseAndSunsetCard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </li>
   );
 };

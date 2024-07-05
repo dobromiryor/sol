@@ -1,16 +1,23 @@
 import clsx from "clsx";
 import { useWeatherStore } from "../../stores/weather.store";
 import { getAdjustedTime } from "../../utils/getAdjustedTime";
+import { SkipToContent } from "../atoms/SkipToContent";
 import { WeatherIcon } from "../atoms/WeatherIcon";
 
 export const HourlyForecast = () => {
   const { data } = useWeatherStore();
 
   return (
-    <div className="flex flex-col gap-2 select-none">
-      <span>Hourly forecast</span>
+    <article
+      id="hourly-forecast"
+      aria-labelledby="hourly-forecast-title"
+      className="flex flex-col gap-2 select-none"
+    >
+      <h1 id="hourly-forecast-title">Hourly forecast</h1>
+      <SkipToContent href="#daily-forecast" destination="daily forecast" />
 
       <ul
+        aria-label="Forecast list"
         className="flex gap-6 px-4 py-4 max-w-full overflow-x-scroll scrollbar-none bg-primary text-inverted-text dark:text-text rounded-xl transition-all"
         tabIndex={0}
       >
@@ -21,11 +28,12 @@ export const HourlyForecast = () => {
               data.isFallback && "blur"
             )}
             key={`Hourly__Forecast__${item.dt}__${index}`}
+            tabIndex={0}
           >
-            <span aria-label="Temperature">{item.temp.toFixed()}°</span>
+            <span aria-description="Temperature">{item.temp.toFixed()}°</span>
             {Math.round(item.pop * 10) * 10 > 0 ? (
               <span
-                aria-label="Probability of precipitation"
+                aria-description="Probability of precipitation"
                 className="text-sm text-blue-300"
               >
                 {Math.round(item.pop * 10) * 10}%
@@ -38,7 +46,10 @@ export const HourlyForecast = () => {
                 icon={item.weather[0].icon}
                 alt={item.weather[0].description}
               />
-              <span className="text-sm text-inverted-text/75 dark:text-text/75">
+              <time
+                id={`time-${index}`}
+                className="text-sm text-inverted-text/75 dark:text-text/75"
+              >
                 {index === 0
                   ? "Now"
                   : new Date(
@@ -46,11 +57,11 @@ export const HourlyForecast = () => {
                     ).toLocaleTimeString("en-gb", {
                       timeStyle: "short",
                     })}
-              </span>
+              </time>
             </div>
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 };

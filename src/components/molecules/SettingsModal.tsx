@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { Theme } from "../../enums/theme.enum";
 import { Unit } from "../../enums/unit.enum";
 import { useTheme } from "../../hooks/useTheme";
@@ -7,19 +6,14 @@ import { useWeatherStore } from "../../stores/weather.store";
 import { Modal } from "../atoms/Modal";
 import { SegmentedButton } from "../atoms/SegmentedButton";
 
-interface SettingsModalProps {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-export const SettingsModal = ({ isOpen, setIsOpen }: SettingsModalProps) => {
+export const SettingsModal = () => {
   const { setDark, setDefault, setLight } = useTheme();
 
   const { theme } = useThemeStore();
   const { unit, setUnit } = useWeatherStore();
 
   return (
-    <Modal title="Settings" isOpen={isOpen} setIsOpen={setIsOpen}>
+    <Modal title="Settings">
       <div className="flex flex-col gap-2">
         <SegmentedButton
           title="Units"

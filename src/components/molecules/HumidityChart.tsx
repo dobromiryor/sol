@@ -33,6 +33,7 @@ export const HumidityChart = () => {
 
   return (
     <ul
+      aria-label="Humidity details list"
       className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none"
       tabIndex={0}
     >
@@ -40,9 +41,10 @@ export const HumidityChart = () => {
         <li
           className="flex flex-col justify-end items-center gap-1 h-28"
           key={`Hourly__Rain__${item.dt}`}
+          tabIndex={0}
         >
           <span
-            aria-label="Humidity"
+            aria-description="Humidity"
             className="text-xs text-inverted-text/75 dark:text-text/75"
           >
             {item.humidity}%

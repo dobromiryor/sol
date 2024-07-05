@@ -18,14 +18,13 @@ export const SegmentedButton = ({
   selectedId,
 }: SegmentedButtonProps) => {
   return (
-    <div className="flex flex-col gap-2">
+    <section aria-labelledby={`${title}-label`} className="flex flex-col gap-2">
       <span id={`${title}-label`} className="font-medium">
         {title}
       </span>
       <div className="flex">
         {buttons.map((item, index) => (
           <button
-            aria-labelledby={`${title}-label`}
             key={`Segmented__Button__${item.id}__${index}__${item.title}`}
             onClick={item.onClick}
             className={clsx(
@@ -34,11 +33,12 @@ export const SegmentedButton = ({
                 ? "bg-accent hover:bg-accent/80"
                 : "hover:bg-accent/50"
             )}
+            autoFocus={selectedId === item.id}
           >
             {item.title}
           </button>
         ))}
       </div>
-    </div>
+    </section>
   );
 };

@@ -1,20 +1,31 @@
 import clsx from "clsx";
 import { useWeatherStore } from "../../stores/weather.store";
 import { getAdjustedTime } from "../../utils/getAdjustedTime";
+import { SkipToContent } from "../atoms/SkipToContent";
 import { WeatherIcon } from "../atoms/WeatherIcon";
 
 export const DailyForecast = () => {
   const { data } = useWeatherStore();
 
   return (
-    <div className="flex flex-col gap-2 select-none">
-      <span>Daily Forecast</span>
+    <article
+      id="daily-forecast"
+      aria-labelledby="daily-forecast-title"
+      className="flex flex-col gap-2 select-none"
+    >
+      <h1 id="daily-forecast-title">Daily Forecast</h1>
+
+      <SkipToContent
+        href="#current-conditions"
+        destination="current conditions"
+      />
 
       <ul className="flex flex-col gap-1 transition-all">
         {data.daily.map((item, index) => (
           <li
             className="bg-primary text-inverted-text dark:text-text rounded-sm first:rounded-t-xl last:rounded-b-xl"
             key={`Daily__Forecast__${item.dt}__${index}`}
+            tabIndex={0}
           >
             <div
               className={clsx(
@@ -22,7 +33,7 @@ export const DailyForecast = () => {
                 data.isFallback && "blur"
               )}
             >
-              <span>
+              <time>
                 {index === 0
                   ? "Today"
                   : new Date(
@@ -32,11 +43,11 @@ export const DailyForecast = () => {
                       day: "numeric",
                       month: "short",
                     })}
-              </span>
+              </time>
               <div className="flex items-center gap-2">
                 {Math.round(item.pop * 10) * 10 > 0 && (
                   <span
-                    aria-label="Probability of precipitation"
+                    aria-description="Probability of precipitation"
                     className="text-sm text-blue-300"
                   >
                     {Math.round(item.pop * 10) * 10}%
@@ -47,15 +58,19 @@ export const DailyForecast = () => {
                   alt={item.weather[0].description}
                 />
                 <div>
-                  <span aria-label="Highest">{item.temp.max.toFixed()}°</span>
+                  <span aria-description="Highest">
+                    {item.temp.max.toFixed()}°
+                  </span>
                   <span aria-hidden>/</span>
-                  <span aria-label="Lowest">{item.temp.min.toFixed()}°</span>
+                  <span aria-description="Lowest">
+                    {item.temp.min.toFixed()}°
+                  </span>
                 </div>
               </div>
             </div>
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 };

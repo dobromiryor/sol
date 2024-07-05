@@ -25,8 +25,11 @@ export const Card = ({
   visualizationSRDescription,
 }: CardProps) => {
   return (
-    <div className="flex flex-col gap-1 p-4 bg-primary text-inverted-text dark:text-text rounded-xl text-sm">
-      <span>{title}</span>
+    <li
+      className="flex flex-col gap-1 p-4 bg-primary text-inverted-text dark:text-text rounded-xl text-sm"
+      tabIndex={0}
+    >
+      <h2>{title}</h2>
 
       <div
         className={clsx(
@@ -65,6 +68,6 @@ export const Card = ({
           <span className="sr-only">{visualizationSRDescription}</span>
         )}
       </div>
-    </div>
+    </li>
   );
 };

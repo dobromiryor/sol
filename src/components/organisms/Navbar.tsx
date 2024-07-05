@@ -5,6 +5,7 @@ import { GeolocationStatus } from "../../enums/geolocation-status.enum";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useGeocoding } from "../../hooks/useGeocoding";
 import { useGeolocation } from "../../hooks/useGeolocation";
+import { useModal } from "../../hooks/useModal";
 import { useReverseGeocoding } from "../../hooks/useReverseGeocoding";
 import { useGeocodeStore } from "../../stores/geocoding.store";
 import { useWeatherStore } from "../../stores/weather.store";
@@ -28,9 +29,10 @@ const itemToString = (item: Geocoding | undefined | null) => {
 export const Navbar = () => {
   const [search, setSearch] = useState("");
   const [selectedItem, setSelectedItem] = useState<Geocoding | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [_, setIsModalOpen] = useModal();
 
   const { isLocal, setIsLocal } = useWeatherStore();
   const { geocode, setGeocode } = useGeocodeStore();
@@ -97,7 +99,7 @@ export const Navbar = () => {
   }, [geocode, isLocal, reverseGeocodingData]);
 
   return (
-    <div className="relative z-10">
+    <nav className="relative z-10">
       <div
         className={clsx(
           "px-3 py-1.5 flex gap-1.5 items-center bg-primary text-inverted-text dark:text-text rounded-full transition-all duration-300",
@@ -165,7 +167,7 @@ export const Navbar = () => {
           </span>
         )}
       </ul>
-      <SettingsModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
-    </div>
+      <SettingsModal />
+    </nav>
   );
 };

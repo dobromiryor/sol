@@ -70,13 +70,17 @@ export const HourlyDetails = () => {
   );
 
   return (
-    <div className="flex flex-col gap-2 select-none">
-      <span>Hourly details</span>
+    <article
+      id="hourly-details"
+      aria-labelledby="#hourly-details-title"
+      className="flex flex-col gap-2 select-none"
+    >
+      <h1 id="hourly-details-title">Hourly details</h1>
 
       <div className="flex flex-col gap-4 py-4 bg-primary rounded-xl">
         <Tabs selectedId={selectedId} setSelectedId={setSelectedId} />
         {cards[selectedId - 1]}
       </div>
-    </div>
+    </article>
   );
 };

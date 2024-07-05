@@ -39,6 +39,7 @@ export const RainChart = () => {
 
   return (
     <ul
+      aria-label="Rain details list"
       className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none"
       tabIndex={0}
     >
@@ -46,6 +47,7 @@ export const RainChart = () => {
         <li
           className="flex flex-col justify-end items-center gap-1 h-28"
           key={`Hourly__Rain__${item.dt}`}
+          tabIndex={0}
         >
           {item.rain?.["1h"] ? (
             <span
