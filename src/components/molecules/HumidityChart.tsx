@@ -32,7 +32,10 @@ export const HumidityChart = () => {
   };
 
   return (
-    <ul className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none ">
+    <ul
+      className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none"
+      tabIndex={0}
+    >
       {data.hourly.map((item) => (
         <li
           className="flex flex-col justify-end items-center gap-1 h-28"

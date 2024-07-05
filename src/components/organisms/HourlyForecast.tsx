@@ -10,7 +10,10 @@ export const HourlyForecast = () => {
     <div className="flex flex-col gap-2 select-none">
       <span>Hourly forecast</span>
 
-      <ul className="flex gap-6 px-4 py-4 max-w-full overflow-x-scroll scrollbar-none bg-primary text-inverted-text dark:text-text rounded-xl transition-all">
+      <ul
+        className="flex gap-6 px-4 py-4 max-w-full overflow-x-scroll scrollbar-none bg-primary text-inverted-text dark:text-text rounded-xl transition-all"
+        tabIndex={0}
+      >
         {data.hourly.map((item, index) => (
           <li
             className={clsx(
