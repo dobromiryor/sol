@@ -31,7 +31,7 @@ export const Now = () => {
 
       <div
         className={clsx(
-          "mb-20 flex justify-between transition-all",
+          "mb-20 flex flex-col xs:flex-row justify-between gap-4 transition-all",
           data.isFallback && "blur"
         )}
       >
@@ -53,7 +53,7 @@ export const Now = () => {
             <span>Low: {data.daily[0].temp.min.toFixed()}°</span>
           </div>
         </div>
-        <div className="flex flex-col gap-1 items-end">
+        <div className="flex flex-col gap-1 xs:items-end">
           <span className="capitalize">
             {data.current.weather[0].description}
           </span>

@@ -26,14 +26,14 @@ export const Card = ({
 }: CardProps) => {
   return (
     <li
-      className="flex flex-col gap-1 p-4 bg-primary text-inverted-text dark:text-text rounded-xl text-sm"
+      className="col-span-2 xs:col-span-1 flex flex-col gap-1 p-4 bg-primary text-inverted-text dark:text-text rounded-xl text-sm"
       tabIndex={0}
     >
       <h2>{title}</h2>
 
       <div
         className={clsx(
-          "flex justify-between items-center transition-all h-full",
+          "flex justify-between items-center gap-4 transition-all h-full",
           isFallback && "blur"
         )}
       >

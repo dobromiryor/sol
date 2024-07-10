@@ -9,7 +9,7 @@ interface TabsProps {
 
 export const Tabs = ({ selectedId, setSelectedId }: TabsProps) => {
   return (
-    <div role="tablist" className="flex gap-2 px-4">
+    <div role="tablist" className="flex gap-2 flex-wrap px-4">
       {tabArr.map((item) => (
         <Tab
           key={`Tab__${item.id}__${item.title}`}
