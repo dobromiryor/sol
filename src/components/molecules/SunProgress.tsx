@@ -1,10 +1,16 @@
 import { SVGProps, memo, useMemo } from "react";
+import { getEndOfDay } from "../../utils/getEndOfDay";
+import { getPercentage } from "../../utils/getPercentage";
+import { getStartOfDay } from "../../utils/getStartOfDay";
 
 interface SunProgressProps extends SVGProps<SVGSVGElement> {
   dt: number;
   sunrise: number;
   sunset: number;
 }
+
+const ARC_RADIUS = 163;
+const ARC_CIRC = Math.PI * ARC_RADIUS;
 
 const SvgComponent = ({ dt, sunrise, sunset, ...props }: SunProgressProps) => {
   const isTheSunOut = useMemo(() => {
@@ -15,17 +21,29 @@ const SvgComponent = ({ dt, sunrise, sunset, ...props }: SunProgressProps) => {
     return false;
   }, [dt, sunrise, sunset]);
 
-  const daylightPercentage = useMemo(() => {
-    const min = sunrise;
-    const max = sunset;
-    const diff = max - min;
-    const nowDiff = dt - min;
+  const beforeSunriseScale = useMemo(
+    () => getPercentage(getStartOfDay(), sunrise, dt),
+    [dt, sunrise]
+  );
 
-    return (nowDiff / diff) * 100;
-  }, [dt, sunrise, sunset]);
+  const afterSunsetScale = useMemo(
+    () => getPercentage(sunset, getEndOfDay(), dt),
+    [dt, sunset]
+  );
+
+  const daylightPercentage = useMemo(
+    () => getPercentage(sunrise, sunset, dt),
+    [dt, sunrise, sunset]
+  );
+
+  const dayTimeScale = useMemo(() => {
+    const sunArcPosition = Math.cos(-Math.PI * (daylightPercentage / 100));
+
+    return Math.abs(-1 + sunArcPosition) / 2;
+  }, [daylightPercentage]);
 
   const strokeDashOffset = useMemo(() => {
-    const pathMin = -189;
+    const pathMin = -ARC_CIRC;
     const pathMax = 0;
     const pathPercentage = ((pathMax - pathMin) / 100) * daylightPercentage;
 
@@ -35,7 +53,7 @@ const SvgComponent = ({ dt, sunrise, sunset, ...props }: SunProgressProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 232 110"
+      viewBox="0 0 640 303"
       fill="none"
       width="100%"
       {...props}
@@ -43,10 +61,10 @@ const SvgComponent = ({ dt, sunrise, sunset, ...props }: SunProgressProps) => {
       <g clipPath="url(#night)">
         <mask
           id="day"
-          width={234}
-          height={98}
+          width={642}
+          height={269}
           x={-1}
-          y={11}
+          y={33}
           maskUnits="userSpaceOnUse"
           style={{
             maskType: "alpha",
@@ -54,42 +72,62 @@ const SvgComponent = ({ dt, sunrise, sunset, ...props }: SunProgressProps) => {
         >
           <path
             fill="#fff"
-            d="M56.491 70S55.483 11 116 11s59.509 59 59.509 59H233v39h-20.172s-37.319 0-37.319-39H56.491c0 39-37.319 39-37.319 39H-1V70h57.491Z"
+            d="M156.733 194.872C156.733 194.872 153.966 33 320 33C486.034 33 483.267 194.872 483.267 194.872H641V301.872H585.655C585.655 301.872 483.267 301.872 483.267 194.872H156.733C156.733 301.872 54.3448 301.872 54.3448 301.872H-1V194.872H156.733Z"
           />
         </mask>
         <g mask="url(#day)">
-          {/* Night */}
-          <path
-            // className="fill-cyan-800"
-            d="M-1 10h234v100H-1z"
+          {/* Before sunrise */}
+          <rect
+            style={{
+              transform: `scaleX(${beforeSunriseScale / 100})`,
+            }}
+            className="fill-cyan-800"
+            y="195"
+            width="157"
+            height="108"
           />
           {/* Day */}
-          <path
+          <rect
             className="fill-cyan-400 transition-all duration-1000"
-            // style={{
-            //   transform: `scaleX(${daylightPercentage / 100})`,
-            //   transformOrigin: "57px 10px",
-            // }}
-            d="M175 10H57v60h118z"
+            x={157}
+            y={33}
+            width="326"
+            height="162"
+            style={{
+              transform: `scaleX(${dayTimeScale})`,
+              transformOrigin: "157px 33px",
+            }}
+          />
+          {/* After sunset */}
+          <rect
+            style={{
+              transform: `scaleX(${afterSunsetScale / 100})`,
+              transformOrigin: "483px 157px",
+            }}
+            className="fill-cyan-800"
+            x="483"
+            y="195"
+            width="157"
+            height="108"
           />
         </g>
         <path
-          className="stroke-inverted-text dark:stroke-text"
-          d="M-1 109V70h234v39h-20.172s-37.319 0-37.319-39c0 0 1.008-59-59.509-59S56.491 70 56.491 70c0 39-37.319 39-37.319 39H-1Z"
+          className="stroke-[2px] stroke-inverted-text dark:stroke-text"
+          d="M-1 302V194.949H641V302H585.655C585.655 302 483.267 302 483.267 194.949C483.267 194.949 486.034 33 320 33C153.966 33 156.733 194.949 156.733 194.949C156.733 302 54.3448 302 54.3448 302H-1Z"
         />
         {isTheSunOut && (
           <path
-            className="stroke-amber-400 stroke-[20px] transition-all duration-1000"
+            className="stroke-amber-400 stroke-[48px] transition-all duration-1000"
             strokeLinecap="round"
-            strokeDasharray="0 189"
+            strokeDasharray={`0 ${Math.ceil(ARC_CIRC)}`}
             strokeDashoffset={strokeDashOffset}
-            d="M56.5 70s-1-59 59.5-59 59.5 59 59.5 59"
+            d="M157.003 195C157.003 195 154.263 33 320 33C485.737 33 482.997 195 482.997 195"
           />
         )}
       </g>
       <defs>
         <clipPath id="night">
-          <path fill="#fff" d="M0 0h232v110H0z" />
+          <rect width="640" height="303" fill="white" />
         </clipPath>
       </defs>
     </svg>
