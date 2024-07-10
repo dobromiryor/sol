@@ -33,10 +33,6 @@ export const SunriseAndSunsetCard = () => {
     return `${formatedH}:${formatedM}`;
   };
 
-  console.log(
-    getDaylightLeft(data.current.dt, data.current.sunset, data.timezone_offset)
-  );
-
   return (
     <li
       className="col-span-2 flex flex-col gap-1 p-4 bg-primary text-inverted-text dark:text-text rounded-xl text-sm"
