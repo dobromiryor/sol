@@ -49,11 +49,15 @@ export const SunriseAndSunsetCard = () => {
         <div className="flex flex-col justify-between h-full">
           <div className="flex flex-col">
             <span className="text-xs text-inverted-text/75 dark:text-text/75">
-              Sunlight left
+              {data.current.dt <= data.current.sunrise
+                ? "Sunlight duration"
+                : "Sunlight left"}
             </span>
             <span className="text-2xl">
               {getDaylightLeft(
-                data.current.dt,
+                data.current.dt <= data.current.sunrise
+                  ? data.current.sunrise
+                  : data.current.dt,
                 data.current.sunset,
                 data.timezone_offset
               )}
