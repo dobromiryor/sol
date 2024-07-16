@@ -4,6 +4,7 @@ import { Hourly } from "../../types/weather.type";
 import { getAdjustedTime } from "../../utils/getAdjustedTime";
 import { getClosestItem } from "../../utils/getClosestItem";
 import { getHumidityColor } from "../../utils/getHumidityProps";
+import { ScrollButtons } from "../atoms/ScrollButtons";
 
 export const HumidityChart = () => {
   const { data } = useWeatherStore();
@@ -32,38 +33,40 @@ export const HumidityChart = () => {
   };
 
   return (
-    <ul
-      aria-label="Humidity details list"
-      className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none"
-      tabIndex={0}
-    >
-      {data.hourly.map((item) => (
-        <li
-          className="flex flex-col justify-end items-center gap-1 h-28"
-          key={`Hourly__Rain__${item.dt}`}
-          tabIndex={0}
-        >
-          <span
-            aria-description="Humidity"
-            className="text-xs text-inverted-text/75 dark:text-text/75"
+    <ScrollButtons>
+      <ul
+        aria-label="Humidity details list"
+        className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none snap-x snap-mandatory"
+        tabIndex={0}
+      >
+        {data.hourly.map((item) => (
+          <li
+            className="flex flex-col justify-end items-center gap-1 h-28 snap-center"
+            key={`Hourly__Rain__${item.dt}`}
+            tabIndex={0}
           >
-            {item.humidity}%
-          </span>
+            <span
+              aria-description="Humidity"
+              className="text-xs text-inverted-text/75 dark:text-text/75"
+            >
+              {item.humidity}%
+            </span>
 
-          <div
-            className={clsx(
-              "p-0.5 w-8 transition-all duration-1000",
-              getHumidityColor(item.humidity),
-              getHumidityProps(item)
-            )}
-          />
-          <span className="text-xs text-inverted-text/75 dark:text-text/75">
-            {new Date(
-              getAdjustedTime(data.timezone_offset, item.dt)
-            ).toLocaleTimeString("en-gb", { timeStyle: "short" })}
-          </span>
-        </li>
-      ))}
-    </ul>
+            <div
+              className={clsx(
+                "p-0.5 w-8 transition-all duration-1000",
+                getHumidityColor(item.humidity),
+                getHumidityProps(item)
+              )}
+            />
+            <span className="text-xs text-inverted-text/75 dark:text-text/75">
+              {new Date(
+                getAdjustedTime(data.timezone_offset, item.dt)
+              ).toLocaleTimeString("en-gb", { timeStyle: "short" })}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </ScrollButtons>
   );
 };

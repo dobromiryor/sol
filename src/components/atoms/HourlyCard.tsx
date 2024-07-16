@@ -24,7 +24,7 @@ export const HourlyCard = ({
   return (
     <div
       className={clsx(
-        "flex flex-col gap-4 text-inverted-text dark:text-text",
+        "flex flex-col gap-4 text-inverted-text dark:text-text overflow-hidden",
         data.isFallback && "blur"
       )}
     >

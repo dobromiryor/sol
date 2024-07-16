@@ -3,6 +3,7 @@ import { useWeatherStore } from "../../stores/weather.store";
 import { Hourly } from "../../types/weather.type";
 import { getAdjustedTime } from "../../utils/getAdjustedTime";
 import { getClosestItem } from "../../utils/getClosestItem";
+import { ScrollButtons } from "../atoms/ScrollButtons";
 
 export const RainChart = () => {
   const { data } = useWeatherStore();
@@ -38,45 +39,47 @@ export const RainChart = () => {
   };
 
   return (
-    <ul
-      aria-label="Rain details list"
-      className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none"
-      tabIndex={0}
-    >
-      {data.hourly.map((item) => (
-        <li
-          className="flex flex-col justify-end items-center gap-1 h-28"
-          key={`Hourly__Rain__${item.dt}`}
-          tabIndex={0}
-        >
-          {item.rain?.["1h"] ? (
-            <span
-              aria-label="Precipitation, mm/h"
-              className="text-xs text-inverted-text/75 dark:text-text/75"
-            >
-              {item.rain?.["1h"] >= 0.25
-                ? item.rain?.["1h"].toFixed(1)
-                : "<0.25"}
-            </span>
-          ) : (
-            <div className="w-4 h-4" />
-          )}
-          <div
-            className={clsx(
-              "border p-0.5 w-8 transition-all duration-1000",
-              getRainProps(item)
+    <ScrollButtons>
+      <ul
+        aria-label="Rain details list"
+        className="flex gap-4 px-4 max-w-full overflow-x-scroll scrollbar-none snap-x snap-mandatory"
+        tabIndex={0}
+      >
+        {data.hourly.map((item) => (
+          <li
+            className="flex flex-col justify-end items-center gap-1 h-28 snap-center"
+            key={`Hourly__Rain__${item.dt}`}
+            tabIndex={0}
+          >
+            {item.rain?.["1h"] ? (
+              <span
+                aria-label="Precipitation, mm/h"
+                className="text-xs text-inverted-text/75 dark:text-text/75"
+              >
+                {item.rain?.["1h"] >= 0.25
+                  ? item.rain?.["1h"].toFixed(1)
+                  : "<0.25"}
+              </span>
+            ) : (
+              <div className="w-4 h-4" />
             )}
-          />
-          <span aria-label="Probability of precipitation" className="text-xs">
-            {Math.round(item.pop * 10) * 10}%
-          </span>
-          <span className="text-xs text-inverted-text/75 dark:text-text/75">
-            {new Date(
-              getAdjustedTime(data.timezone_offset, item.dt)
-            ).toLocaleTimeString("en-gb", { timeStyle: "short" })}
-          </span>
-        </li>
-      ))}
-    </ul>
+            <div
+              className={clsx(
+                "border p-0.5 w-8 transition-all duration-1000",
+                getRainProps(item)
+              )}
+            />
+            <span aria-label="Probability of precipitation" className="text-xs">
+              {Math.round(item.pop * 10) * 10}%
+            </span>
+            <span className="text-xs text-inverted-text/75 dark:text-text/75">
+              {new Date(
+                getAdjustedTime(data.timezone_offset, item.dt)
+              ).toLocaleTimeString("en-gb", { timeStyle: "short" })}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </ScrollButtons>
   );
 };

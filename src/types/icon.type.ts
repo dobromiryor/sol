@@ -1,4 +1,4 @@
-type MiscIcon = "settings" | "close";
+type MiscIcon = "settings" | "close" | "chevron_left" | "chevron_right";
 
 type GeolocationIcon =
   | "location_on" // SUCCESS
