@@ -2,14 +2,23 @@ import { useEffect } from "react";
 import { Theme } from "../enums/theme.enum";
 import { useThemeStore } from "../stores/theme.store";
 
-const updateMetaThemeColor = (theme: Theme) => {
-  const metaColorSheme = document.querySelector("meta[name=color-scheme]");
+const updateMetaThemeColor = (theme: Theme, isAuto = false) => {
+  const metaColorScheme = document.querySelector("meta[name=color-scheme]");
 
-  if (metaColorSheme && "content" in metaColorSheme) {
-    if (theme === Theme.DARK) {
-      metaColorSheme.content = "dark light";
+  if (metaColorScheme && "content" in metaColorScheme) {
+    if (isAuto) {
+      metaColorScheme.content = "light dark";
     } else {
-      metaColorSheme.content = "light dark";
+      switch (theme) {
+        case Theme.DARK:
+          metaColorScheme.content = "dark light";
+          break;
+        case Theme.LIGHT:
+          metaColorScheme.content = "light dark";
+          break;
+        default:
+          metaColorScheme.content = "light dark";
+      }
     }
   }
 
@@ -18,8 +27,8 @@ const updateMetaThemeColor = (theme: Theme) => {
   );
 
   const themeMap = {
-    dark: "#0a1429",
-    light: "#d6e0f5",
+    dark: "#0F172A",
+    light: "#BAE5FD",
   };
 
   if (!metaThemeColor && theme !== Theme.AUTO) {
@@ -38,7 +47,13 @@ const updateMetaThemeColor = (theme: Theme) => {
   }
 };
 
-export const useTheme = () => {
+interface ThemeHookProps {
+  dt: number;
+  sunset?: number;
+  sunrise?: number;
+}
+
+export const useTheme = ({ dt, sunrise, sunset }: ThemeHookProps) => {
   const { theme, setTheme } = useThemeStore();
 
   useEffect(() => {
@@ -52,57 +67,52 @@ export const useTheme = () => {
       "(prefers-color-scheme: dark)"
     ).matches;
 
-    if (
-      storage?.state.theme === Theme.DARK ||
-      (storage?.state.theme === Theme.AUTO && prefersDarkMQ)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  useEffect(() => {
-    const prefersDarkMQ = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = () => {
-      if (prefersDarkMQ.matches) {
-        updateMetaThemeColor(Theme.DARK);
+    switch (storage?.state.theme) {
+      case Theme.DARK:
         document.documentElement.classList.add("dark");
-      } else {
-        updateMetaThemeColor(Theme.LIGHT);
+        updateMetaThemeColor(Theme.DARK);
+        break;
+      case Theme.LIGHT:
         document.documentElement.classList.remove("dark");
-      }
-    };
-
-    prefersDarkMQ.addEventListener("change", handleChange);
-
-    return () => prefersDarkMQ.removeEventListener("change", handleChange);
-  }, [setTheme]);
+        updateMetaThemeColor(Theme.LIGHT);
+        break;
+      case Theme.AUTO:
+        if (sunrise !== undefined && sunset !== undefined) {
+          if (dt >= sunrise && dt <= sunset) {
+            document.documentElement.classList.remove("dark");
+            updateMetaThemeColor(Theme.LIGHT, true);
+          } else {
+            document.documentElement.classList.add("dark");
+            updateMetaThemeColor(Theme.DARK, true);
+          }
+        } else {
+          if (prefersDarkMQ) {
+            document.documentElement.classList.add("dark");
+            updateMetaThemeColor(Theme.DARK, true);
+          } else {
+            document.documentElement.classList.remove("dark");
+            updateMetaThemeColor(Theme.LIGHT, true);
+          }
+        }
+        break;
+    }
+  }, [dt, sunrise, sunset, theme]);
 
   // Whenever the user explicitly chooses light mode
   const setLight = () => {
     setTheme(Theme.LIGHT);
     updateMetaThemeColor(Theme.LIGHT);
-    document.documentElement.classList.remove("dark");
   };
 
   // Whenever the user explicitly chooses dark mode
   const setDark = () => {
     setTheme(Theme.DARK);
     updateMetaThemeColor(Theme.DARK);
-    document.documentElement.classList.add("dark");
   };
 
-  // Whenever the user explicitly chooses to respect the OS preference
+  // Whenever the user explicitly chooses to respect the OS preference and/or location's date time
   const setDefault = () => {
     setTheme(Theme.AUTO);
-    updateMetaThemeColor(Theme.AUTO);
-
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
   };
 
   return { setLight, setDark, setDefault };
