@@ -6,15 +6,12 @@ import { HourlyDetails } from "./components/organisms/HourlyDetails";
 import { HourlyForecast } from "./components/organisms/HourlyForecast";
 import { Navbar } from "./components/organisms/Navbar";
 import { Now } from "./components/organisms/Now";
-import { useModal } from "./hooks/useModal";
 
 function App() {
-  const [isOpen] = useModal();
-
   return (
     <main
       className={clsx("mx-auto p-4 flex flex-col max-w-screen-sm gap-4")}
-      tabIndex={isOpen ? -1 : 0}
+      id="top"
     >
       <Navbar />
       <Now />
