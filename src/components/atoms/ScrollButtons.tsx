@@ -1,5 +1,12 @@
 import clsx from "clsx";
-import { cloneElement, ReactElement, useCallback, useRef } from "react";
+import {
+	cloneElement,
+	ReactElement,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { Icon } from "./Icon";
 
 interface ScrollButtonProps {
@@ -7,6 +14,9 @@ interface ScrollButtonProps {
 }
 
 export const ScrollButtons = ({ children }: ScrollButtonProps) => {
+  const [isLeftVisible, setIsLeftVisible] = useState(false);
+  const [isRightVisible, setIsRightVisible] = useState(true);
+
   const ref = useRef<HTMLUListElement>(null);
 
   const renderChildren = useCallback(() => {
@@ -24,16 +34,39 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
     });
   };
 
-  const canHover = matchMedia("(hover: hover)").matches;
-
   const buttonStyles =
     "group-hover:translate-x-0 focus:translate-x-0 flex justify-center items-center h-6 w-6 rounded-full backdrop-blur transition-all bg-transparent hover:bg-background focus:bg-background shadow-sm hover:shadow-md focus:shadow-md dark:shadow-md dark:hover:shadow-lg dark:focus:shadow-lg";
+
+  useEffect(() => {
+    const currentRef = ref.current;
+
+    const handleScroll = () => {
+      if (ref.current) {
+        setIsLeftVisible(ref.current.scrollLeft !== 0);
+        setIsRightVisible(
+          ref.current.scrollLeft + ref.current.clientWidth !==
+            ref.current.scrollWidth
+        );
+      }
+    };
+
+    ref.current?.addEventListener("scrollend", handleScroll);
+
+    return () => currentRef?.removeEventListener("scrollend", handleScroll);
+  }, []);
+
+  const canHover = matchMedia("(hover: hover)").matches;
 
   if (!canHover) return children;
 
   return (
     <div className="relative">
-      <div className="absolute h-full w-10 group z-10">
+      <div
+        className={clsx(
+          "absolute h-full w-10 group z-10 initial-opacity-0 transition-all duration-300 [transition-behavior:allow-discrete]",
+          isLeftVisible ? "block opacity-100" : "hidden opacity-0"
+        )}
+      >
         <button
           className={clsx(
             "absolute top-1/2 -translate-y-1/2 left-2 -translate-x-4",
@@ -45,7 +78,12 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
           <Icon icon="chevron_left" aria-hidden />
         </button>
       </div>
-      <div className="absolute right-0 h-full w-10 group z-10">
+      <div
+        className={clsx(
+          "absolute right-0 h-full w-10 group z-10 initial-opacity-0 transition-all duration-300 [transition-behavior:allow-discrete]",
+          isRightVisible ? "block opacity-100" : "hidden opacity-0"
+        )}
+      >
         <button
           className={clsx(
             "absolute top-1/2 -translate-y-1/2 left-2 translate-x-4",
