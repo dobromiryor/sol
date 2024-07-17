@@ -112,7 +112,7 @@ const SvgComponent = ({ dt, sunrise, sunset, ...props }: SunProgressProps) => {
           />
         </g>
         <path
-          className="stroke-[2px] stroke-inverted-text dark:stroke-text"
+          className="stroke stroke-cyan-400"
           d="M-1 302V194.949H641V302H585.655C585.655 302 483.267 302 483.267 194.949C483.267 194.949 486.034 33 320 33C153.966 33 156.733 194.949 156.733 194.949C156.733 302 54.3448 302 54.3448 302H-1Z"
         />
         {isTheSunOut && (
