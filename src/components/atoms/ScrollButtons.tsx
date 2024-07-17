@@ -7,6 +7,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useDebounce } from "../../hooks/useDebounce";
 import { Icon } from "./Icon";
 
 interface ScrollButtonProps {
@@ -15,7 +16,7 @@ interface ScrollButtonProps {
 
 export const ScrollButtons = ({ children }: ScrollButtonProps) => {
   const [isLeftVisible, setIsLeftVisible] = useState(false);
-  const [isRightVisible, setIsRightVisible] = useState(true);
+  const [isRightVisible, setIsRightVisible] = useState(false);
 
   const ref = useRef<HTMLUListElement>(null);
 
@@ -37,23 +38,39 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
   const buttonStyles =
     "group-hover:translate-x-0 focus:translate-x-0 flex justify-center items-center h-6 w-6 rounded-full backdrop-blur transition-all bg-transparent hover:bg-background focus:bg-background shadow-sm hover:shadow-md focus:shadow-md dark:shadow-md dark:hover:shadow-lg dark:focus:shadow-lg";
 
+  const handleButtonVisibility = useCallback(() => {
+    if (ref.current) {
+      setIsLeftVisible(ref.current.scrollLeft !== 0);
+      setIsRightVisible(
+        ref.current.scrollLeft + ref.current.clientWidth !==
+          ref.current.scrollWidth
+      );
+    }
+  }, []);
+
+  const { debouncedCallback } = useDebounce({
+    callback: handleButtonVisibility,
+  });
+
+  useEffect(() => {
+    debouncedCallback?.();
+  }, [debouncedCallback]);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => debouncedCallback?.());
+
+    return () =>
+      window.removeEventListener("resize", () => debouncedCallback?.());
+  }, [debouncedCallback]);
+
   useEffect(() => {
     const currentRef = ref.current;
 
-    const handleScroll = () => {
-      if (ref.current) {
-        setIsLeftVisible(ref.current.scrollLeft !== 0);
-        setIsRightVisible(
-          ref.current.scrollLeft + ref.current.clientWidth !==
-            ref.current.scrollWidth
-        );
-      }
-    };
+    ref.current?.addEventListener("scrollend", handleButtonVisibility);
 
-    ref.current?.addEventListener("scrollend", handleScroll);
-
-    return () => currentRef?.removeEventListener("scrollend", handleScroll);
-  }, []);
+    return () =>
+      currentRef?.removeEventListener("scrollend", handleButtonVisibility);
+  }, [handleButtonVisibility]);
 
   const canHover = matchMedia("(hover: hover)").matches;
 
