@@ -34,7 +34,8 @@ export const Alerts = () => {
 
       {data.alerts.length > 1 && (
         <Button
-          className="absolute bottom-4 right-4 border-red-300 hover:bg-red-300 text-rose-200 hover:text-rose-950"
+          buttonStyle="alert"
+          className="absolute bottom-4 right-4"
           onClick={() => setIsExpanded((prev) => !prev)}
           aria-label={isExpanded ? "Show less alerts" : "Show more alerts"}
         >

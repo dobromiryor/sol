@@ -6,21 +6,23 @@
   :root {
     @apply font-medium text-text bg-background;
 
-    --text: 7 8 9;
-    --inverted-text: 246 247 248;
-    --background: 214 224 245;
-    --primary: 112 120 143;
-    --secondary: 196 183 200;
-    --accent: 175 151 173;
+    /* https://www.realtimecolors.com/?colors=082F49-BAE6FD-F0F9FF-E0F2FE-7DD3FC&fonts=Noto%20Sans-Noto%20Sans */
+
+    --text: 8 47 73;
+    --background: 186 230 253;
+    --primary: 240 249 255;
+    --secondary: 224 242 254;
+    --accent: 125 211 252;
   }
 
   .dark {
-    --text: 246 247 248;
-    --inverted-text: 7 8 9;
-    --background: 10 20 41;
-    --primary: 112 120 143;
-    --secondary: 68 55 72;
-    --accent: 104 80 102;
+    /* https://www.realtimecolors.com/?colors=F1F5F9-0F172A-1E293B-334155-475569&fonts=Noto%20Sans-Noto%20Sans */
+
+    --text: 241 245 249;
+    --background: 15 23 42;
+    --primary: 30 41 59;
+    --secondary: 51 65 85;
+    --accent: 71 85 105;
   }
 }
 

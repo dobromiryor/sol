@@ -28,10 +28,10 @@ export const SegmentedButton = ({
             key={`Segmented__Button__${item.id}__${index}__${item.title}`}
             onClick={item.onClick}
             className={clsx(
-              "px-3 py-1 border-y border-l last:border border-accent first:rounded-l-full last:rounded-r-full transition-color duration-300",
+              "px-3 py-1 border-y border-l last:border border-background first:rounded-l-full last:rounded-r-full transition-color duration-300",
               selectedId === item.id
-                ? "bg-accent hover:bg-accent/80"
-                : "hover:bg-accent/50"
+                ? "bg-background hover:bg-accent"
+                : "hover:bg-secondary"
             )}
             autoFocus={selectedId === item.id}
           >

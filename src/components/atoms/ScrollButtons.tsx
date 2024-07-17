@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { cloneElement, ReactElement, useCallback, useRef } from "react";
 import { Icon } from "./Icon";
 
@@ -25,13 +26,19 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
 
   const canHover = matchMedia("(hover: hover)").matches;
 
+  const buttonStyles =
+    "group-hover:translate-x-0 focus:translate-x-0 flex justify-center items-center h-6 w-6 rounded-full backdrop-blur transition-all bg-transparent hover:bg-background focus:bg-background shadow-sm hover:shadow-md focus:shadow-md dark:shadow-md dark:hover:shadow-lg dark:focus:shadow-lg";
+
   if (!canHover) return children;
 
   return (
     <div className="relative">
       <div className="absolute h-full w-10 group z-10">
         <button
-          className="absolute top-1/2 -translate-y-1/2 left-2 -translate-x-4 flex justify-center items-center h-6 w-6 rounded-full bg-secondary/50 group-hover:translate-x-0 focus:translate-x-0 transition-all hover:bg-secondary focus:bg-secondary backdrop-blur"
+          className={clsx(
+            "absolute top-1/2 -translate-y-1/2 left-2 -translate-x-4",
+            buttonStyles
+          )}
           aria-label="Scroll left"
           onClick={() => handleScroll("left")}
         >
@@ -40,7 +47,10 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
       </div>
       <div className="absolute right-0 h-full w-10 group z-10">
         <button
-          className="absolute top-1/2 -translate-y-1/2 left-2 translate-x-4 flex justify-center items-center h-6 w-6 rounded-full bg-secondary/50 group-hover:translate-x-0 focus:translate-x-0 transition-all hover:bg-secondary focus:bg-secondary backdrop-blur"
+          className={clsx(
+            "absolute top-1/2 -translate-y-1/2 left-2 translate-x-4",
+            buttonStyles
+          )}
           aria-label="Scroll right"
           onClick={() => handleScroll("right")}
         >

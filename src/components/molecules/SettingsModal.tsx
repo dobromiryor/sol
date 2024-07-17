@@ -7,10 +7,15 @@ import { Modal } from "../atoms/Modal";
 import { SegmentedButton } from "../atoms/SegmentedButton";
 
 export const SettingsModal = () => {
-  const { setDark, setDefault, setLight } = useTheme();
-
   const { theme } = useThemeStore();
-  const { unit, setUnit } = useWeatherStore();
+  const {
+    data: {
+      current: { dt, sunset, sunrise },
+    },
+    unit,
+    setUnit,
+  } = useWeatherStore();
+  const { setDark, setDefault, setLight } = useTheme({ dt, sunset, sunrise });
 
   return (
     <Modal title="Settings">

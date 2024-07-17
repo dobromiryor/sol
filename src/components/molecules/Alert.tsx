@@ -45,12 +45,12 @@ export const Alert = ({ item, className }: AlertProps) => {
   return (
     <div
       className={clsx(
-        "flex flex-col gap-4 p-4 rounded-sm first:rounded-t-xl last:rounded-b-xl bg-red-800 text-rose-200 text-sm",
+        "flex flex-col gap-4 p-4 rounded-sm first:rounded-t-xl last:rounded-b-xl bg-rose-200 dark:bg-red-800 text-red-800 dark:text-rose-200 text-sm",
         className
       )}
     >
       <div className="flex items-center gap-2">
-        <div className="relative flex-shrink-0 flex justify-center items-center box-content p-2 w-6 h-6 bg-red-300 text-rose-950 rounded-lg">
+        <div className="relative flex-shrink-0 flex justify-center items-center box-content p-2 w-6 h-6 bg-red-800 dark:bg-rose-200 text-rose-200 dark:text-red-800 rounded-lg">
           {item.tags.map((tag, index) => (
             <Icon
               className={clsx(
@@ -67,7 +67,7 @@ export const Alert = ({ item, className }: AlertProps) => {
         <span className="text-lg">{item.event}</span>
       </div>
       {item.event !== item.description && <span>{item.description}</span>}
-      <div className="flex flex-wrap gap-1 text-red-300">
+      <div className="flex flex-wrap gap-1 text-xs text-red-700 dark:text-rose-300 font-normal">
         <span>{item.sender_name}</span>
         <span>•</span>
         <div>

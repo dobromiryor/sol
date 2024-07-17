@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { ButtonHTMLAttributes } from "react";
 import { type TabType } from "../../types/tab.type";
 import { Button } from "./Button";
@@ -12,15 +11,7 @@ export const Tab = ({ tab, ...props }: TabProps) => {
   const { icon, id, selectedId, title } = tab;
 
   return (
-    <Button
-      role="tab"
-      className={clsx(
-        selectedId === id
-          ? "bg-accent hover:bg-accent/80"
-          : "hover:bg-accent/50"
-      )}
-      {...props}
-    >
+    <Button role="tab" isActive={selectedId === id} {...props}>
       <Icon
         className="text-inverted-text dark:text-text"
         icon={icon}
