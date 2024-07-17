@@ -6,6 +6,7 @@ import { getAdjustedTime } from "../../utils/getAdjustedTime";
 import { getEndOfDay } from "../../utils/getEndOfDay";
 import { getWindIntensity } from "../../utils/getWindIntensity";
 import { HourlyCard } from "../atoms/HourlyCard";
+import { SkipToContent } from "../atoms/SkipToContent";
 import { HumidityChart } from "../molecules/HumidityChart";
 import { RainChart } from "../molecules/RainChart";
 import { Tabs } from "../molecules/Tabs";
@@ -76,6 +77,8 @@ export const HourlyDetails = () => {
       className="flex flex-col gap-2 select-none"
     >
       <h1 id="hourly-details-title">Hourly details</h1>
+
+      <SkipToContent href="#top" destination="top" />
 
       <div className="flex flex-col gap-4 py-4 bg-primary rounded-xl">
         <Tabs selectedId={selectedId} setSelectedId={setSelectedId} />
