@@ -21,12 +21,14 @@ export const WindChart = () => {
             key={`Hourly__Wind__${item.dt}`}
             tabIndex={0}
           >
-            <WindIcon
-              degree={item.wind_deg}
-              speed={item.wind_speed}
-              unit={unit}
-              aria-hidden
-            />
+            <div className="flex justify-center items-center w-8 h-8">
+              <WindIcon
+                degree={item.wind_deg}
+                speed={item.wind_speed}
+                unit={unit}
+                aria-hidden
+              />
+            </div>
             <span
               aria-label={`Wind speed (${
                 unit === Unit.IMPERIAL ? "mph" : "m/s"
