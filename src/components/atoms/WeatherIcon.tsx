@@ -18,7 +18,7 @@ export const WeatherIcon = ({
   );
 
   const scaleMapStyles = {
-    1: "drop-shadow-sm",
+    1: "drop-shadow-md",
     2: "drop-shadow-xl",
     4: "drop-shadow-2xl",
   };
@@ -26,7 +26,11 @@ export const WeatherIcon = ({
   return (
     <img
       /* Using scale to get rid of the unnecessary padding */
-      className={clsx("scale-150", scaleMapStyles[scale], className)}
+      className={clsx(
+        "scale-150 dark:drop-shadow-none",
+        scaleMapStyles[scale],
+        className
+      )}
       src={src.href}
       /* Scaling down to avoid blurred icons */
       width={(50 * scale) / 2}

@@ -5,6 +5,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      boxShadow: {
+        "center-inset-2": "0 0 2px 0 var(--tw-shadow-colored) inset",
+      },
       screens: {
         xs: "360px",
       },

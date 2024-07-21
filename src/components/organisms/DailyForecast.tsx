@@ -48,7 +48,7 @@ export const DailyForecast = () => {
                 {Math.round(item.pop * 10) * 10 > 0 && (
                   <span
                     aria-description="Probability of precipitation"
-                    className="text-sm text-blue-300"
+                    className="text-xs text-blue-300"
                   >
                     {Math.round(item.pop * 10) * 10}%
                   </span>

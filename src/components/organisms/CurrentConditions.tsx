@@ -1,5 +1,6 @@
 import { SkipToContent } from "../atoms/SkipToContent";
 import { HumidityCard } from "../molecules/HumidityCard";
+import { MoonPhaseCard } from "../molecules/MoonPhaseCard";
 import { PressureCard } from "../molecules/PressureCard";
 import { SunriseAndSunsetCard } from "../molecules/SunriseAndSunsetCard";
 import { UVCard } from "../molecules/UVCard";
@@ -22,6 +23,7 @@ export const CurrentConditions = () => {
         <UVCard />
         <PressureCard />
         <SunriseAndSunsetCard />
+        <MoonPhaseCard />
       </ul>
     </article>
   );
