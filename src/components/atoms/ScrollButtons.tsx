@@ -30,9 +30,14 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
 
   const handleScroll = (direction: "left" | "right") => {
     ref.current?.scrollBy({
-      left: direction === "left" ? -512 : 512,
+      left:
+        direction === "left"
+          ? -ref.current?.clientWidth / 2
+          : ref.current?.clientWidth / 2,
       behavior: "smooth",
     });
+
+    console.log(ref.current?.offsetWidth);
   };
 
   const buttonStyles =
@@ -77,7 +82,7 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
   if (!canHover) return children;
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <div
         className={clsx(
           "absolute h-full w-10 group z-10 initial-opacity-0 transition-all duration-300 [transition-behavior:allow-discrete]",
