@@ -36,8 +36,6 @@ export const ScrollButtons = ({ children }: ScrollButtonProps) => {
           : ref.current?.clientWidth / 2,
       behavior: "smooth",
     });
-
-    console.log(ref.current?.offsetWidth);
   };
 
   const buttonStyles =
