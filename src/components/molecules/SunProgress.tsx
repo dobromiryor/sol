@@ -21,10 +21,11 @@ const SvgComponent = ({ dt, sunrise, sunset, ...props }: SunProgressProps) => {
     return false;
   }, [dt, sunrise, sunset]);
 
-  const beforeSunriseScale = useMemo(
-    () => getPercentage(getStartOfDay(), sunrise, dt),
-    [dt, sunrise]
-  );
+  const beforeSunriseScale = useMemo(() => {
+    const start = getStartOfDay();
+
+    return start > sunrise ? 100 : getPercentage(getStartOfDay(), sunrise, dt);
+  }, [dt, sunrise]);
 
   const afterSunsetScale = useMemo(
     () => getPercentage(sunset, getEndOfDay(), dt),
