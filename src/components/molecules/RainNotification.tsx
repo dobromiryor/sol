@@ -10,9 +10,7 @@ export const RainNotification = () => {
     () =>
       data.hourly
         .filter((_, index) => index <= 12)
-        .find(
-          ({ rain, pop }) => rain?.["1h"] && rain["1h"] > 0.5 && pop > 0.5
-        ),
+        .find(({ rain, pop }) => rain?.["1h"] && rain["1h"] > 0.5 && pop > 0.5),
     [data.hourly]
   );
 
@@ -22,7 +20,7 @@ export const RainNotification = () => {
     <a href="#hourly-details">
       <Notification
         icon="rainy"
-        content={`Expect rain around ${new Date(
+        content={`Rain likely around ${new Date(
           getAdjustedTime(data.timezone_offset, expectedRain.dt)
         ).toLocaleTimeString("en-gb", { timeStyle: "short" })}`}
       />
