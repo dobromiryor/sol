@@ -2,8 +2,6 @@ import { useMemo, useState } from "react";
 import { tabArr } from "../../consts/tabsArr";
 import { Unit } from "../../enums/unit.enum";
 import { useWeatherStore } from "../../stores/weather.store";
-import { getAdjustedTime } from "../../utils/getAdjustedTime";
-import { getEndOfDay } from "../../utils/getEndOfDay";
 import { getWindIntensity } from "../../utils/getWindIntensity";
 import { HourlyCard } from "../atoms/HourlyCard";
 import { SkipToContent } from "../atoms/SkipToContent";
@@ -17,14 +15,9 @@ export const HourlyDetails = () => {
 
   const { data, unit } = useWeatherStore();
 
-  const endOfDay = useMemo(() => getEndOfDay(), []);
-
   const todaysData = useMemo(
-    () =>
-      data.hourly.filter(
-        (item) => getAdjustedTime(data.timezone_offset, item.dt) < endOfDay
-      ),
-    [data.hourly, data.timezone_offset, endOfDay]
+    () => data.hourly.filter((_, index) => index <= 23),
+    [data.hourly]
   );
 
   const todaysRainAmount = useMemo(
