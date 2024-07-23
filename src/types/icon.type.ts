@@ -29,4 +29,11 @@ type AlertTagIcon =
   | "emergency_heat" /* fire warning */
   | "warning" /* other/fallback */;
 
-export type IconType = MiscIcon | GeolocationIcon | TabIcon | AlertTagIcon;
+type TrendIcon = "trending_up" | "trending_down";
+
+export type IconType =
+  | MiscIcon
+  | GeolocationIcon
+  | TabIcon
+  | AlertTagIcon
+  | TrendIcon;

@@ -5,6 +5,7 @@ import { DailyForecast } from "./components/organisms/DailyForecast";
 import { HourlyDetails } from "./components/organisms/HourlyDetails";
 import { HourlyForecast } from "./components/organisms/HourlyForecast";
 import { Navbar } from "./components/organisms/Navbar";
+import { Notifications } from "./components/organisms/Notifications";
 import { Now } from "./components/organisms/Now";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Navbar />
       <Now />
       <Alerts />
+      <Notifications />
       <HourlyForecast />
       <DailyForecast />
       <CurrentConditions />
