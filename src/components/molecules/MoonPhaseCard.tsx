@@ -43,7 +43,7 @@ export const MoonPhaseCard = () => {
         <ScrollButtons>
           <ul
             className={clsx(
-              "flex justify-between items-center gap-4 max-w-full h-full overflow-x-scroll scrollbar-none snap-x snap-proximity transition-all ",
+              "flex justify-between items-center gap-4 max-w-full h-full overflow-x-scroll scrollbar-none snap-x snap-proximity transition-all pr-4",
               data.isFallback && "blur"
             )}
             aria-label="Moon phase list"
